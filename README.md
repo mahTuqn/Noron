@@ -1,16 +1,16 @@
 # Helmet Detection with YOLOv8
 
-Ứng dụng Streamlit phân tích ảnh/video công trường bằng YOLOv8. Dự án có pipeline lấy dữ liệu, chuẩn hóa nhãn, fine-tune YOLOv8n/s/m, đánh giá trên test và demo browser. Kế hoạch chi tiết: [KE_HOACH_DU_AN_HELMET_DETECTION.md](KE_HOACH_DU_AN_HELMET_DETECTION.md).
+Ứng dụng Streamlit phân tích ảnh/video công trường bằng YOLOv8. Dự án có pipeline lấy dữ liệu, chuẩn hóa nhãn, fine-tune YOLOv8n/s/m, đánh giá trên test và demo browser.
 
 ## Trạng thái
 
 - Đã chuẩn hóa 12.580 ảnh từ SHWD và Kaggle: 8.955 train, 1.356 validation, 2.269 test. Ảnh kiểm tra nhãn: [combined_val_samples.jpg](results/data_audit/combined_val_samples.jpg).
-- Đã huấn luyện YOLOv8n/s/m tối đa 10 epoch, cùng cấu hình 512 px, batch 1, seed 42. Bảng so sánh trên split test ban đầu nằm trong [BAO_CAO_KET_QUA.md](BAO_CAO_KET_QUA.md); kiểm tra checksum sau đó phát hiện 9 nhóm ảnh test trùng byte với train/validation, xem [báo cáo dữ liệu mở rộng](BAO_CAO_DATA_MO_RONG.md).
+- Đã huấn luyện YOLOv8n/s/m tối đa 10 epoch, cùng cấu hình 512 px, batch 1, seed 42. Kiểm tra checksum sau đó phát hiện 9 nhóm ảnh test ban đầu trùng byte với train/validation.
 - Checkpoint demo là YOLOv8m best theo validation (epoch 8, mAP50–95 0,4389): [helmet_best.pt](weights/helmet_best.pt). Trên test đạt Precision 0,8691, Recall 0,6772, mAP50 0,7779, mAP50–95 0,4525; tốc độ suy luận 18,86 ms/ảnh trên RTX 3050 Laptop.
 - Phân tích lỗi theo kích thước box/độ sáng: [summary.json](results/error_analysis/helmet_best_final_chunked/summary.json), [strata_metrics.csv](results/error_analysis/helmet_best_final_chunked/strata_metrics.csv) và [error_examples.jpg](results/error_analysis/helmet_best_final_chunked/error_examples.jpg).
 - Đã kiểm thử trực tiếp app trong browser: ảnh validation cho 10 phát hiện; clip MP4 H.264 20 khung hình được xử lý thành công, video đầu ra phát được và có nút tải xuống. Clip QA là ảnh validation lặp lại để kiểm tra pipeline, không đại diện cho video tự nhiên.
 - Đã bổ sung 20.443 ảnh gán nhãn và 32 video CC BY 4.0 vào `ext/`, giữ tách biệt khỏi benchmark gốc. App cho chọn ảnh mẫu từ DeBoniz/Mendeley PPE và video mẫu Mendeley motorcycle.
-- Mở app tại `http://127.0.0.1:8502` khi server đang chạy. Xem [kế hoạch dự án](KE_HOACH_DU_AN_HELMET_DETECTION.md) và [báo cáo kết quả](BAO_CAO_KET_QUA.md).
+- Mở app tại `http://127.0.0.1:8502` khi server đang chạy.
 
 ## Môi trường
 
@@ -56,7 +56,7 @@ Kết quả ở `data/processed_combined`; cấu hình YOLO là `configs/data_co
 
 ### Dữ liệu mở rộng phục vụ phân tích
 
-Kho `ext/` có 18.157 ảnh DeBoniz, 2.286 ảnh Mendeley PPE và 32 video Mendeley motorcycle. Nguồn video thuộc miền xe máy, có nhãn ở cấp clip chứ không có box từng frame; dùng cho phân tích định tính, không tính mAP detection. Các mẫu người dùng rà soát, gồm một false positive với mũ lưỡi trai thường và một ảnh PPE thiếu nhãn mũ, nằm trong `results/external_data_analysis/manual_review_cases.csv`. Xem [báo cáo dữ liệu mở rộng](BAO_CAO_DATA_MO_RONG.md), inventory tại `results/external_data_analysis/`, và cấu hình test ngoài miền [data_deboniz_external.yaml](configs/data_deboniz_external.yaml).
+Kho `ext/` có 18.157 ảnh DeBoniz, 2.286 ảnh Mendeley PPE và 32 video Mendeley motorcycle. Nguồn video thuộc miền xe máy, có nhãn ở cấp clip chứ không có box từng frame; dùng cho phân tích định tính, không tính mAP detection. Các mẫu người dùng rà soát, gồm một false positive với mũ lưỡi trai thường và một ảnh PPE thiếu nhãn mũ, nằm trong `results/external_data_analysis/manual_review_cases.csv`. Danh mục dữ liệu được tạo cục bộ tại `results/external_data_analysis/`. Mẫu cấu hình test ngoài miền nằm tại [configs/data_deboniz_external.example.yaml](configs/data_deboniz_external.example.yaml).
 
 ## Huấn luyện và đánh giá
 

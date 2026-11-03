@@ -32,3 +32,7 @@ kaggle.json
 /weights/
 *.pth
 *.onnx
+
+# Keep reports and plans local
+*.[mM][dD]
+!/README.md
