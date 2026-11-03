@@ -1,0 +1,7 @@
+path: ../data/retraining_all_stills
+train: images/train
+val: images/val
+test: images/test
+names:
+  0: wearing_helmet
+  1: not_wearing_helmet

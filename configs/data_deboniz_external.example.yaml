@@ -1,0 +1,9 @@
+# External robustness benchmark. Keep its metrics separate from the project's
+# original SHWD + Kaggle held-out test split.
+path: ../ext/deboniz_helmet/extracted/datasetmodelloscelto/dataset10kadjusted
+train: train/images
+val: val/images
+test: test/images
+names:
+  0: wearing_helmet
+  1: not_wearing_helmet

@@ -1,0 +1,34 @@
+.venv/
+.tmp/
+.pip-cache/
+.ultralytics/
+__pycache__/
+.streamlit/
+data/raw/
+ext/
+data/processed/
+runs/
+results/
+weights/*.pt
+*.pt
+assets/*.mp4
+
+# Local configuration and credentials
+/configs/*
+!/configs/*.example.yaml
+.env
+.env.*
+!.env.example
+secrets.*
+credentials.*
+kaggle.json
+*.pem
+*.key
+*.pfx
+
+# Local datasets, media, and generated artifacts
+/data/
+/assets/
+/weights/
+*.pth
+*.onnx

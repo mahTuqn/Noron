@@ -1,0 +1,12 @@
+path: ../data/processed
+train: images/train
+val: images/val
+test: images/test
+
+# Verify labels in the downloaded SHWD archive before using this mapping.
+# SHWD source `hat`/`person` annotations map to wearer states. Their boxes are
+# not fully symmetric: `hat` usually covers the helmet/head, with a few large
+# outliers, while `person` usually covers an uncovered head.
+names:
+  0: wearing_helmet
+  1: not_wearing_helmet
